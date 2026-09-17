@@ -25,6 +25,7 @@ interface RandomPickerProps {
   onClearHistory: () => void;
   onRemoveHistoryItem: (id: string) => void;
   onSwitchToRoster: () => void;
+  onLoadSample?: () => void;
 }
 
 export const RandomPicker: React.FC<RandomPickerProps> = ({
@@ -34,6 +35,7 @@ export const RandomPicker: React.FC<RandomPickerProps> = ({
   onClearHistory,
   onRemoveHistoryItem,
   onSwitchToRoster,
+  onLoadSample,
 }) => {
   // Settings
   const [drawMode, setDrawMode] = useState<DrawMode>('without_replacement');
@@ -280,12 +282,24 @@ export const RandomPicker: React.FC<RandomPickerProps> = ({
           <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
             請先切換至「學生名單」分頁匯入 CSV 或貼上名單，即可進行隨機抽籤。
           </p>
-          <button
-            onClick={onSwitchToRoster}
-            className="mt-5 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs transition-colors"
-          >
-            前往名單設定
-          </button>
+          <div className="mt-5 flex items-center justify-center gap-3 flex-wrap">
+            {onLoadSample && (
+              <button
+                id="btn-picker-load-sample"
+                onClick={onLoadSample}
+                className="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                一鍵載入模擬名單（28人）
+              </button>
+            )}
+            <button
+              onClick={onSwitchToRoster}
+              className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs transition-colors"
+            >
+              前往名單設定
+            </button>
+          </div>
         </div>
       ) : (
         <div 

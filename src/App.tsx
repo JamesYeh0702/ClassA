@@ -91,6 +91,12 @@ export default function App() {
     setHistory(prev => prev.filter(item => item.id !== id));
   };
 
+  const handleLoadSampleRoster = () => {
+    handleUpdateStudents(SAMPLE_STUDENTS);
+    handleClearHistory();
+    soundManager.playPing();
+  };
+
   const toggleSound = () => {
     const nextMuted = !isMuted;
     setIsMuted(nextMuted);
@@ -165,6 +171,16 @@ export default function App() {
           {/* Utility actions */}
           <div className="flex items-center gap-2">
             <button
+              id="header-load-sample-btn"
+              onClick={handleLoadSampleRoster}
+              title="一鍵載入 28 位示範名單快速體驗"
+              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-amber-200 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold transition-all shadow-2xs"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <span>載入模擬名單</span>
+            </button>
+
+            <button
               id="header-sound-btn"
               onClick={toggleSound}
               title={isMuted ? '音效已靜音' : '音效開啟中'}
@@ -199,6 +215,7 @@ export default function App() {
             onClearHistory={handleClearHistory}
             onRemoveHistoryItem={handleRemoveHistoryItem}
             onSwitchToRoster={() => setActiveTab('roster')}
+            onLoadSample={handleLoadSampleRoster}
           />
         )}
 
@@ -206,6 +223,7 @@ export default function App() {
           <GroupMaker
             students={students}
             onSwitchToRoster={() => setActiveTab('roster')}
+            onLoadSample={handleLoadSampleRoster}
           />
         )}
 

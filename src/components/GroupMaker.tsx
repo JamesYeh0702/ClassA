@@ -34,11 +34,13 @@ const GROUP_THEMES = [
 interface GroupMakerProps {
   students: Student[];
   onSwitchToRoster: () => void;
+  onLoadSample?: () => void;
 }
 
 export const GroupMaker: React.FC<GroupMakerProps> = ({
   students,
   onSwitchToRoster,
+  onLoadSample,
 }) => {
   // Strategy settings
   const [strategy, setStrategy] = useState<GroupingStrategy>('by_member_count');
@@ -384,14 +386,26 @@ export const GroupMaker: React.FC<GroupMakerProps> = ({
             )}
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
             {students.length === 0 ? (
-              <button
-                onClick={onSwitchToRoster}
-                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs transition-colors"
-              >
-                前往匯入名單
-              </button>
+              <>
+                {onLoadSample && (
+                  <button
+                    id="btn-group-load-sample"
+                    onClick={onLoadSample}
+                    className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5"
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    一鍵載入模擬名單（28人）
+                  </button>
+                )}
+                <button
+                  onClick={onSwitchToRoster}
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs transition-colors"
+                >
+                  前往匯入名單
+                </button>
+              </>
             ) : (
               <button
                 id="btn-do-grouping"
